@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="public/index.css" />
+  </head>
+  <body>
+  	<%@ include file="common/header.jsp" %>
+  	<%@ include file="common/nav.jsp" %>
+  	<section>
+  	<%String routes = request.getParameter("routes") != null ? request.getParameter("section") : "";
+  	switch(routes){
+  	case "salesRegistration":
+  	%><%@ include file="routes/salesRegistration.jsp" %><%
+  		break;
+  	case "viewConsolidatedSalesHistory":
+  	%><%@ include file="routes/viewConsolidatedSalesHistory.jsp" %><%
+  		break;
+  	case "salesStatusByProduct":
+  	%><%@ include file="routes/salesStatusByProduct.jsp" %><%
+  		break;
+  	case "salesStatusByCategory":
+  	%><%@ include file="routes/salesStatusByCategory.jsp" %><%
+  		break;
+  	default:
+  		break;
+  	}
+  	%>
+  	</section>
+  	<%@ include file="routes/footer.jsp" %>
+  </body>
+</html>

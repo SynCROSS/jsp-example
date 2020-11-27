@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ page import="java.sql.*" %>
+<%
+try {
+    Class.forName("oracle.jdbc.OracleDriver");
+    Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/xe", "order_admin", "order_password");
+
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT ");
+
+    while (rs.next()) {
+        %>
+            <tr>
+            </tr>
+        <%
+    }
+
+    stmt.close();
+    conn.close();
+}
+catch (Exception e) {
+    e.printStackTrace();
+}
+%>

@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
+<%
+	try {
+	Class.forName("oracle.jdbc.OracleDriver");
+	Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//122.128.169.32:1521/xe", "smc_user_4", "1234");
+
+	int student_id = Integer.parseInt(request.getParameter("student_id"));
+	int point = Integer.parseInt(request.getParameter("point"));
+	String subject = request.getParameter("subject").equals("국어") ? "KO"
+	: request.getParameter("subject").equals("수학") ? "MA"
+			: request.getParameter("subject").equals("컴퓨터") ? "CO" : request.getParameter("subject");
+
+	Statement stmt = conn.createStatement();
+	String query = " INSERT INTO " + " point(id, student_id, point, subject) "
+	+ " VALUES(seq_point.nextval, %d, %d, '%s') ";
+
+	ResultSet rs = stmt.executeQuery(String.format(query, student_id, point, subject));
+	
+	stmt.close();
+	conn.commit();
+	conn.close();
+	
+	response.sendRedirect("../index.jsp");
+} catch (Exception e) {
+	e.printStackTrace();
+}
+%>

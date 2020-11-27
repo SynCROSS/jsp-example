@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
+<h2>통합 매출 내역 조회</h2>
+<table border="1">
+	<tr>
+		<td>판매 ID</td>
+		<td>상품명</td>
+		<td>구매 일자</td>
+		<td>총 구매 금액</td>
+		<td>구매 개수</td>
+	</tr>
+	<%
+		try {
+		Class.forName("oracle.jdbc.OracleDriver");
+		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@//122.128.169.32:1521/xe", "smc_user_4", "1234");
+
+		Statement stmt = conn.createStatement();
+		String query = " SELECT " + " sale.product_id, product.name, purchase_date, sale_price, amount"
+		+ " FROM " + " sale, product " + " WHERE " + " product.product_id = sale.product_id";
+		System.out.println(query);
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()) {
+	%>
+	<tr>
+		<td><%=rs.getInt("product_id")%></td>
+		<td><%=rs.getString("name")%></td>
+		<td><%=rs.getString("purchase_date")%></td>
+		<td><%=rs.getInt("total_price")%></td>
+		<td><%=rs.getInt("amount")%></td>
+	</tr>
+	<%
+		}
+
+	stmt.close();
+	conn.commit();
+	conn.close();
+	} catch (Exception e) {
+	e.printStackTrace();
+	}
+	%>
+</table>
